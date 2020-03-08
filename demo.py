@@ -2,6 +2,8 @@ from math import sqrt
 
 import pygame as pg
 
+from constants import FPS
+
 
 class Demo():
     """A class to manage demo gameplay."""
@@ -9,6 +11,7 @@ class Demo():
     def __init__(self, ai_game):
         """Initialize references to objects the class needs access to."""
         self.ai_game = ai_game
+        self.clock = ai_game.clock
         self.settings = ai_game.settings
         self.display = ai_game.display
         self.alien_bullets = ai_game.alien_bullets
@@ -43,6 +46,9 @@ class Demo():
 
             if not self.aliens:
                 self.ai_game.start_new_level()
+
+            # Cap fps at 30 frames per second
+            time_passed = self.clock.tick(FPS)
 
             # End the demo gameplay in response to a keypress or mouse button
             for event in pg.event.get():
@@ -87,17 +93,19 @@ class Demo():
         # If there are bullets close to the ship, it will priotize moving away from them
         if self.alien_bullets:
             for bullet in self.alien_bullets:
-                if 0 < bullet.x - self.ship.x < 1.5 * self.ship.rect.width:
+                if 0 < bullet.x - self.ship.rect.centerx < 1.5 * self.ship.rect.width:
                     self.ship.moving_left = True
                     self.ship.moving_right = False
-                elif -1.5 * self.ship.rect.width < bullet.x - self.ship.x <= 0:
+                elif -1.5 * self.ship.rect.width < bullet.x - self.ship.rect.centerx <= 0:
                     self.ship.moving_left = False
                     self.ship.moving_right = True
                 # This last condition is to stop the ship from jittering if there's a bullet between it and the nearest alien.
-                elif abs(bullet.x - self.ship.x) == 1.5 * self.ship.rect.width:
+                elif (1.5 * self.ship.rect.width <= abs(bullet.x - self.ship.rect.centerx)
+                      <= 1.6 * self.ship.rect.width):
                     self.ship.moving_left = False
                     self.ship.moving_right = False
 
         # Have the ship fire bullets as long as it is close to nearest alien
-        if - 2 * self.ship.rect.width <= abs(nearest_alien.x - self.ship.x) <= 2 * self.ship.rect.width:
+        if (- 2 * self.ship.rect.width <= abs(nearest_alien.x - self.ship.rect.centerx) <=
+                2 * self.ship.rect.width):
             self.ship.fire_bullet()

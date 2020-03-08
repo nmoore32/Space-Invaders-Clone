@@ -42,7 +42,7 @@ class Settings:
         self.ship_speed = 9.0
         self.bullet_speed = 11.0
         self.alien_speed = 6.0
-        self.alien_bullets_allowed = 0
+        self.alien_bullets_allowed = 1
 
         # fleet_direction of 1 represents right; -1 represents left.
         self.fleet_direction = 1

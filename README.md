@@ -5,7 +5,7 @@ Press Q to quit.
 Press the left/right arrows to move.
 Press space to fire.
 
-As soon as I finished the tutorial I heavily refactored the code. The initial AlienInvasion class pretty much did everthing --- checking for events, checking for collisions, firing bullets, creating the alien fleet...). I moved a lot of the responsibilites from AlienInvasion to other classes (it ended up being half the size it initially was -- although it ended up back at roughly the original tutorial length with the my own additions). I created the following classes during my refactoring.
+As soon as I finished the tutorial I heavily refactored the code. The initial AlienInvasion class pretty much did everthing --- checking for events, checking for collisions, firing bullets, creating the alien fleet...). I moved a lot of the responsibilites from AlienInvasion to other classes (it ended up being half the size it initially was. I created the following classes during my refactoring.
 
 - AlienFleet
 - CollisionHandler
@@ -24,10 +24,10 @@ Aside from the refactoring I also added a number of things to complete the game.
 - Difficulty settings (determing the maximum number of alien bullets on screen)
 - Can press E, N, or H to select difficulty/start the game
 - Sound effects
-- Background music
 - Start screen complete with blinking "Press Any Key to Start" message
 - Game over message
 - Demo game play (simple ai plays the game if left on the start screen for 30 seconds)
+- Capped framerate at 30 FPS
 
 In the process of making these changes I added the following classes
 
@@ -35,3 +35,4 @@ In the process of making these changes I added the following classes
 - Projectile
 - AlienBullet
 - ShipBullet (this one was just me renaming the bullet class and adjusting for the new projectile parent class)
+- Demo

@@ -1,4 +1,4 @@
-import pygame
+import pygame as pg
 from pygame import gfxdraw, mixer
 from pygame.sprite import Sprite
 
@@ -16,33 +16,31 @@ class Explosion(Sprite):
         # Set the surface for the explosion equal to height of the aliens
         self.height = int(alien.rect.height)
         self.radius = int(alien.rect.height / 2)
-        self.image = pygame.Surface(
-            (self.height, self.height), pygame.SRCALPHA)
+        self.image = pg.Surface(
+            (self.height, self.height), pg.SRCALPHA)
         self.rect = self.image.get_rect()
         self.rect.center = alien.rect.center
 
         # Track time in order to specify duration of explosion
-        self.clock = pygame.time.Clock()
+        self.clock = pg.time.Clock()
         self.last_update = 0
 
         # Draw the explosion
-        pygame.gfxdraw.aacircle(self.image, self.radius,
-                                self.radius, self.radius, RED)
-        pygame.gfxdraw.filled_circle(
+        pg.gfxdraw.aacircle(self.image, self.radius,
+                            self.radius, self.radius, RED)
+        pg.gfxdraw.filled_circle(
             self.image, self.radius, self.radius, self.radius, RED)
 
         # Load and play explosion sound
         self.explosion_sound = mixer.Sound('sound_effects/explosion.wav')
-        self.explosion_sound.set_volume(10.0)
         self.explosion_sound.play()
 
     def update(self):
         """Update the explosion."""
         # Remove the explosion after a set amount of time
         self.last_update += self.clock.tick()
-        for explosion in self.explosions:
-            if self.last_update > EXPLOSION_DURATION:
-                self.explosions.remove(explosion)
+        if self.last_update > EXPLOSION_DURATION:
+            self.explosions.remove(self)
 
     def blitme(self):
         """Draw the explosion."""

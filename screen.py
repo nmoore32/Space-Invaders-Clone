@@ -1,7 +1,7 @@
 import ctypes
 from itertools import cycle
 
-import pygame
+import pygame as pg
 from pygame import transform
 
 from constants import *
@@ -19,7 +19,7 @@ class Display:
         ctypes.windll.user32.SetProcessDPIAware()
 
         # Get information about the users screen size
-        infoObject = pygame.display.Info()
+        infoObject = pg.display.Info()
         self.width = infoObject.current_w
         self.height = infoObject.current_h
 
@@ -30,12 +30,12 @@ class Display:
         self.settings.scale_settings(self.scale_factor)
 
         # Initialize screen
-        self.surface = pygame.Surface((self.width, self.height))
-        self.screen = pygame.display.set_mode(
-            (0, 0), pygame.FULLSCREEN)
+        self.surface = pg.Surface((self.width, self.height))
+        self.screen = pg.display.set_mode(
+            (0, 0), pg.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
-        pygame.display.set_caption("Alien Invasion")
+        pg.display.set_caption("Alien Invasion")
 
     def initialize_object_attributes(self, ai_game):
         """Initilize attributes associated with objects created after the Display object itself."""
@@ -60,9 +60,9 @@ class Display:
 
     def create_start_screen(self):
         """Create the game start screen."""
-        titleFont = pygame.font.Font(
+        titleFont = pg.font.Font(
             TITLE_FONT, int(self.scale_factor * LARGE_FONT))
-        font = pygame.font.SysFont(None, int(self.scale_factor * SMALL_FONT))
+        font = pg.font.SysFont(None, int(self.scale_factor * SMALL_FONT))
 
         # Create and position the title text
         self.title_text = titleFont.render(
@@ -80,35 +80,35 @@ class Display:
         self.blink_rect.center = self.screen.get_rect().center
         self.blink_rect.centery += ELEMENT_SPACING * self.title_text_rect.height
         # Set the off_text surface and fill it in with the background color
-        self.off_text = pygame.Surface(self.blink_rect.size)
+        self.off_text = pg.Surface(self.blink_rect.size)
         self.off_text.fill(self.settings.bg_color)
         # Create an iterator that repreatedly iterates over the two elements "on_text" and "off_text"
         self.blink_surfaces = cycle([self.on_text, self.off_text])
         # Create a variable to store the next value from the iterator
         self.blink_surface = next(self.blink_surfaces)
         # Define a new event (events are represented by integers, with pygame.USEREVENT have the highest value pygame uses)
-        self.BLINKEVENT = pygame.USEREVENT + 1
+        self.BLINKEVENT = pg.USEREVENT + 1
         # Set a timer to trigger a BLINKEVENT
-        pygame.time.set_timer(self.BLINKEVENT, BLINK_DURATION)
+        pg.time.set_timer(self.BLINKEVENT, BLINK_DURATION)
 
         # Hide the mouse cursor
-        pygame.mouse.set_visible(False)
+        pg.mouse.set_visible(False)
 
-    def display_start_screen(self):
+    def display_start_screen(self, demo):
         """Display the game start screen."""
 
         # Set a timer for displaying demo gameplay
-        DEMOEVENT = pygame.USEREVENT + 2
-        pygame.time.set_timer(DEMOEVENT, DEMO_GAMEPLAY_TIMER)
+        DEMOEVENT = pg.USEREVENT + 2
+        pg.time.set_timer(DEMOEVENT, DEMO_GAMEPLAY_TIMER)
 
         # Set the while loop for the start screen
         while True:
             self.surface.fill(self.settings.bg_color)
             self.surface.blit(self.title_text, self.title_text_rect)
 
-            for event in pygame.event.get():
+            for event in pg.event.get():
                 # Reset the game state in response to user input in case of demo gameplay
-                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pg.KEYDOWN or event.type == pg.MOUSEBUTTONDOWN:
                     self.ai_game.reset_level()
                     self.stats.reset_stats()
                     self.sb.prep_images()
@@ -118,15 +118,15 @@ class Display:
                     self.blink_surface = next(self.blink_surfaces)
                 # Run demo gameplay in response to a DEMOEVENT
                 if event.type == DEMOEVENT:
-                    self.ai_game.run_demo()
+                    demo.run_demo()
 
             self.surface.blit(self.blink_surface, self.blink_rect)
             self.screen.blit(self.surface, (0, 0))
-            pygame.display.flip()
+            pg.display.flip()
 
     def create_game_over_msg(self):
         """Create the message to display at game over."""
-        font = pygame.font.SysFont(None, int(self.scale_factor * LARGE_FONT))
+        font = pg.font.SysFont(None, int(self.scale_factor * LARGE_FONT))
 
         # Create and position the game over text
         # Render the text to display
@@ -162,7 +162,7 @@ class Display:
 
         # Make the most recently drawn screen visible.
         self.screen.blit(self.surface, (0, 0))
-        pygame.display.flip()
+        pg.display.flip()
 
 
 class Button:
@@ -177,10 +177,10 @@ class Button:
         self.width, self.height = 200 * self.sf, 50 * self.sf
         self.button_color = LIGHT_GREEN
         self.text_color = WHITE
-        self.font = pygame.font.SysFont(None, int(self.sf * SMALL_FONT))
+        self.font = pg.font.SysFont(None, int(self.sf * SMALL_FONT))
 
         # Build the botton's rect object and center it.
-        self.rect = pygame.Rect(0, 0, self.width, self.height)
+        self.rect = pg.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen.get_rect().center
         # Move the button to its proper location
         self.rect.x += x1 * self.width

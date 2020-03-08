@@ -3,7 +3,6 @@
 #
 
 import pygame
-from pygame import mixer
 
 # Colors
 BLACK = (0, 0, 0)
@@ -46,5 +45,6 @@ SCREEN_WIDTH = 1280
 ALIEN_IMG_PANEL_DURATION = 500
 # For blinking "Press Any Key to Start" message
 BLINK_DURATION = 500
-DEMO_GAMEPLAY_TIMER = 30000
+DEMO_GAMEPLAY_TIMER = 1000
+FPS = 30
 EXPLOSION_DURATION = 125

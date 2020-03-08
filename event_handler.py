@@ -1,6 +1,6 @@
 import sys
 
-import pygame
+import pygame as pg
 
 
 class EventHandler:
@@ -16,43 +16,42 @@ class EventHandler:
 
     def check_events(self):
         """Respond to keypresses and mouse events."""
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.sb.record_high_score()
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                self.ai_game.quit()
+            elif event.type == pg.KEYDOWN:
                 self._check_keydown_events(event)
-            elif event.type == pygame.KEYUP:
+            elif event.type == pg.KEYUP:
                 self._check_keyup_events(event)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                mouse_pos = pg.mouse.get_pos()
                 self._check_button(mouse_pos)
 
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
-        if event.key == pygame.K_RIGHT:
+        if event.key == pg.K_RIGHT:
             self.ship.moving_right = True
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pg.K_LEFT:
             self.ship.moving_left = True
-        elif event.key == pygame.K_q:
+        elif event.key == pg.K_q:
             self.ai_game.quit()
-        elif event.key == pygame.K_SPACE:
+        elif event.key == pg.K_SPACE:
             self.ship.fire_bullet()
-        elif event.key == pygame.K_e and not self.stats.game_active:
+        elif event.key == pg.K_e and not self.stats.game_active:
             self.settings.set_difficulty(self.settings.easy)
             self.ai_game.start_game()
-        elif event.key == pygame.K_n and not self.stats.game_active:
+        elif event.key == pg.K_n and not self.stats.game_active:
             self.settings.set_difficulty(self.settings.normal)
             self.ai_game.start_game()
-        elif event.key == pygame.K_h and not self.stats.game_active:
+        elif event.key == pg.K_h and not self.stats.game_active:
             self.settings.set_difficulty(self.settings.hard)
             self.ai_game.start_game()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
-        if event.key == pygame.K_RIGHT:
+        if event.key == pg.K_RIGHT:
             self.ship.moving_right = False
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pg.K_LEFT:
             self.ship.moving_left = False
 
     def _check_button(self, mouse_pos):

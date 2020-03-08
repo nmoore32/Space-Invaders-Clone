@@ -1,4 +1,4 @@
-import pygame
+import pygame as pg
 from pygame.sprite import Sprite
 from pygame import mixer
 
@@ -40,7 +40,7 @@ class Ship(Sprite):
         """Scale the ship image based on screen size."""
         width = int(self.rect.width * self.display.scale_factor)
         height = int(self.rect.height * self.display.scale_factor)
-        self.image = pygame.transform.scale(self.image, (width, height))
+        self.image = pg.transform.scale(self.image, (width, height))
         self.rect = self.image.get_rect()
 
     def update(self):

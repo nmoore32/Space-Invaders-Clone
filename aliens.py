@@ -1,6 +1,6 @@
 from random import choice
 
-import pygame
+import pygame as pg
 from pygame import mixer
 from pygame.sprite import Sprite
 
@@ -42,7 +42,7 @@ class Alien(Sprite):
         self.image = self.images[self.index]
 
         # Initialize variable to track time to determine when to switch between images
-        self.clock = pygame.time.Clock()
+        self.clock = pg.time.Clock()
         self.elapsed = 0
 
         # Start each new alien near the top left of the screen.
@@ -60,7 +60,7 @@ class Alien(Sprite):
         height = int(self.images[0].get_rect().height *
                      self.display.scale_factor)
         for i in range(len(self.images)):
-            self.images[i] = pygame.transform.scale(
+            self.images[i] = pg.transform.scale(
                 self.images[i], (width, height))
         self.rect = self.images[0].get_rect()
 
@@ -72,7 +72,8 @@ class Alien(Sprite):
     def update(self):
         """Move the alien right or left, update image, and fire bullets."""
         # Update the aliens horizontal position
-        self.x += (self.settings.alien_speed * self.settings.fleet_direction)
+        self.x += (self.settings.alien_speed *
+                   self.settings.fleet_direction)
         self.rect.x = self.x
 
         # Increment time elapsed by time since method was last called

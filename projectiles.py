@@ -1,4 +1,4 @@
-import pygame
+import pygame as pg
 from pygame.sprite import Sprite
 
 
@@ -20,7 +20,7 @@ class Projectile(Sprite):
 
     def draw_bullet(self):
         """Draw the bullet to the screen."""
-        pygame.draw.rect(self.surface, self.color, self.rect)
+        pg.draw.rect(self.surface, self.color, self.rect)
 
 
 class ShipBullet(Projectile):
@@ -33,8 +33,8 @@ class ShipBullet(Projectile):
         self.color = self.settings.ship_bullet_color
 
         # Create a bullet rect at (0, 0) and then set correct position.
-        self.rect = pygame.Rect(
-            0, 0, self.settings.bullet_width, self.settings.bullet_height)
+        self.rect = pg.Rect(0, 0, self.settings.bullet_width,
+                            self.settings.bullet_height)
         self.rect.midtop = self.ship.rect.midtop
 
         # Store the bullet's position as a decimal value.
@@ -57,8 +57,8 @@ class AlienBullet(Projectile):
         self.color = self.settings.alien_bullet_color
 
         # Create a bullet rect at (0, 0) and then set correct position.
-        self.rect = pygame.Rect(
-            0, 0, self.settings.bullet_width, self.settings.bullet_height)
+        self.rect = pg.Rect(0, 0, self.settings.bullet_width,
+                            self.settings.bullet_height)
         self.rect.midbottom = alien.rect.midbottom
 
         # Store the bullet's position as a decimal value.
@@ -76,6 +76,13 @@ class AlienBullet(Projectile):
 
 class ProjectileHandler():
     """A class to manage projectiles."""
+    # This class only has one method other than __init__. However, it allows me initialize all the
+    # bullet position updates, bullet removals, and bullet collision checks from one update call.
+    # Hence why I don't want to break down its update method into multiple methods or move
+    # the checks into the ShipBullet and AlienBullet classes. I also don't what this method in
+    # AlienInvasion because it's part of the behind-the-scences logic of how the game works rather
+    # than part of the overall main game logic. So, yes, I have a class with two methods, one of
+    # which is __init__.
 
     def __init__(self, ai_game):
         """Initialize attributes."""

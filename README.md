@@ -12,6 +12,7 @@ Press space to fire.
 ### Starting the game:
 
 To start the game you'd run `$ python alien_invasion.py` 
+Note the the directory structure has to be maintained. All of the `.py` files should be in one folder. Then that folder should have subdirectories "images" and "sound_effects" containing the `.bmp` and `.wav` files.
 
 
 ### Building an executable:

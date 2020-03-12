@@ -1,56 +1,44 @@
-<pre>
-A space invaders clone that I began by following the tutorial in Python Crash Course by Eric Matthes. 
+A space invaders clone that I began by following the tutorial in Python Crash Course by Eric Matthes.  
 
 
-Controls
+### Controls
 
 Press E, N, or H to select difficulty setting and start the game.
 Press Q to quit.
 Press the left/right arrows to move.
-Press space to fire.
+Press space to fire.  
 
 
-Starting the game:
+### Starting the game:
 
-To start the game you'd run "python alien_invasion.py"
-
-
-Building an executable:
-
-To build an executable you need to download cx_Freeze "python -m pip install cx_Freeze --upgrade"
-Then run "python setup.py build"
-
-Two issues with cx_Freexe.
-
-(i) It's not always good at finding game assets, which is why I specified where to find each one. But 
-cx_Freeze will put them all in the same directory as the executable. You'll have to create folders in 
-the directory with the executable called "images" and "sound_effects" and move the images and sound 
-files, respectively, to those folders. This is because the executable will look for the game assets in 
-those subfolders.
-
-(ii) It's also not very good at determining what modules from the python standard library are needed. 
-When creating the executable you'll a "lib" folder that contains a lot of unnecessary modules. You can 
-exclude modules in setup.py (I've excluded some of the larger unneccessary modules that cx_Freeze was 
-initially including).
+To start the game you'd run `$ python alien_invasion.py` 
 
 
-Non-Windows systems:
+### Building an executable:
 
-If you're not using a windows system, then you may need to comment out line 19 of screen.py.
-The line that reads "ctypes.windll.user32.SetProcessDPIAware()"
+To build an executable you need to download cx_Freeze `$ python -m pip install cx_Freeze --upgrade`
+Then run `python setup.py build`
+
+### Two issues with cx_Freexe.
+
+(i) It's not always good at finding game assets, which is why I specified where to find each one. But cx_Freeze will put them all in the same directory as the executable. You'll have to create folders in the directory with the executable called "images" and "sound_effects" and move the images and sound files, respectively, to those folders. This is because the executable will look for the game assets in  those subfolders.
+
+(ii) It's also not very good at determining what modules from the python standard library are needed. When creating the executable you'll a "lib" folder that contains a lot of unnecessary modules. You can exclude modules in `setup.py` (I've excluded some of the larger unneccessary modules that cx_Freeze was initially including).  
 
 
+### Non-Windows systems:
 
-As soon as I finished the tutorial I heavily refactored the code. The initial AlienInvasion class pretty 
-much did everthing --- checking for events, checking for collisions, firing bullets, creating the alien fleet...).
-I moved a lot of the responsibilites from AlienInvasion to other classes (it ended up being half the size it 
-initially was. I created the following classes during my refactoring.
+If you're not using a windows system, then you may need to comment out line 19 of `screen.py`. The line that reads `ctypes.windll.user32.SetProcessDPIAware()`  
+
+### Changes I made after finishing the tutorial
+
+As soon as I finished the tutorial I heavily refactored the code. The initial AlienInvasion class pretty much did everthing --- checking for events, checking for collisions, firing bullets, creating the alien fleet...). I moved a lot of the responsibilites from AlienInvasion to other classes (it ended up being half the size it initially was. I created the following classes during my refactoring.
 
 - AlienFleet
 - CollisionHandler
 - EventHandler
 - ProjectileHandler
-- Display
+- Display  
 
 
 Aside from the refactoring I also added a number of things to complete the game.
@@ -76,5 +64,3 @@ In the process of making these changes I added the following classes
 - AlienBullet
 - ShipBullet (this one was just me renaming the bullet class and adjusting for the new projectile parent class)
 - Demo
-
-</pre>

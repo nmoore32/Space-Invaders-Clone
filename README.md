@@ -1,3 +1,4 @@
+<pre>
 A space invaders clone that I began by following the tutorial in Python Crash Course by Eric Matthes. 
 
 
@@ -65,3 +66,5 @@ In the process of making these changes I added the following classes
 - AlienBullet
 - ShipBullet (this one was just me renaming the bullet class and adjusting for the new projectile parent class)
 - Demo
+
+</pre>

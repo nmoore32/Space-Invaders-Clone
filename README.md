@@ -4,14 +4,20 @@ A space invaders clone that I began by following the tutorial in Python Crash Co
 ### Controls
 
 Press E, N, or H to select difficulty setting and start the game.
+
 Press Q to quit.
+
 Press the left/right arrows to move.
+
 Press space to fire.  
 
 
 ### Starting the game:
 
+Download the [Pygame module](https://www.pygame.org/download.shtml)
+
 To start the game you'd run `$ python alien_invasion.py` 
+
 Note the the directory structure has to be maintained. All of the `.py` files should be in one folder. Then that folder should have subdirectories "images" and "sound_effects" containing the `.bmp` and `.wav` files.
 
 
